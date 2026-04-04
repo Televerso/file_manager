@@ -1,0 +1,68 @@
+
+services:
+  php:
+    build: ./php
+    working_dir: /var/www/html
+    container_name: yii2-php
+    
+    volumes:
+      - ..:/var/www/html
+    networks:
+      - app-network
+    ports:
+      - '9000:90'
+    depends_on:
+      - mysql
+    environment:
+      - PHP_IDE_CONFIG=serverName=localhost
+
+  mysql: 
+    image: mysql:5.7.41
+    container_name: yii2-mysql
+    networks:
+      - app-network
+    ports:
+    - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_DATABASE=yii2db
+    volumes:
+      - mysql-data:/var/lib/mysql
+    
+  
+  nginxx:
+    image: nginx:1.20.1
+    container_name: yii2-nginx
+    networks:
+      - app-network
+    ports:
+      - "8000:80"
+    volumes:
+      - ..:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+
+  php_admin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: yii2-admin
+    networks:
+      - app-network
+    ports:
+      - "8080:88"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+      UPLOAD_LIMIT: 100M
+    depends_on:
+      - mysql
+      
+volumes:
+  mysql-data:
+  
+networks:
+  app-network:
+    driver: bridge

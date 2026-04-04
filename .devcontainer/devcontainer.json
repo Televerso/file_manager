@@ -1,0 +1,21 @@
+{
+    "name": "TsetApp",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "php",
+    "workspaceFolder": "/var/www/html",
+    
+    // "customizations": {
+    //     "vscode": {
+    //         "extensions": [
+    //             "bmewburn.vscode-intelephense-client",
+    //             "xdebug.php-debug",
+    //             "cweijan.vscode-mysql-client2"
+    //         ]
+    //     }
+    // },
+    
+    "forwardPorts": [8000, 9000, 8080, 3306],
+    
+    // "postCreateCommand": "composer install && chmod -R 777 runtime web/assets"
+    "postCreateCommand": "composer install --no-interaction && php yii migrate --interactive=0"
+}
