@@ -18,8 +18,8 @@ class File extends ActiveRecord
     public function rules()
     {
         return [
-            [['real_file_name', 'file_name', 'file_path'], 'required'],
-            [['real_file_name', 'file_name', 'file_path', 'user_name'], 'string', 'max' => 255],
+            [['file_true_name', 'file_name', 'file_path'], 'required'],
+            [['file_true_name', 'file_name', 'file_path', 'user_name'], 'string', 'max' => 255],
             [['userID'], 'integer'],
             [['time_modify'], 'safe'],
         ];
@@ -104,5 +104,21 @@ class File extends ActiveRecord
     public static function listAll()
     {
         return static::find()->all();
+    }
+
+    public function getFormattedSize()
+    {
+        $path = Yii::getAlias('@webroot') . '/' . $this->file_path;
+        if (file_exists($path)) {
+            $bytes = filesize($path);
+            $units = ['B', 'KB', 'MB', 'GB'];
+            $i = 0;
+            while ($bytes >= 1024 && $i < count($units) - 1) {
+                $bytes /= 1024;
+                $i++;
+            }
+            return round($bytes, 2) . ' ' . $units[$i];
+        }
+        return '0 B';
     }
 }

@@ -41,7 +41,7 @@ class FileForm extends model
         $fileRecord->userID = $this->userID;
         $fileRecord->user_name = $this->user_name;
         $fileRecord->time_modify = date('Y-m-d_H:i:s');
-        $fileRecord->real_file_name = $fileRecord->time_modify.'_'.md5($fileRecord->time_modify . $fileRecord->file_name).'_'.$fileRecord->file_name;
+        $fileRecord->file_true_name = $fileRecord->time_modify.'_'.md5($fileRecord->time_modify . $fileRecord->file_name).'_'.$fileRecord->file_name;
 
         // Путь для сохранения (относительно корня проекта)
         $uploadDir = Yii::getAlias('@webroot') . '/uploads/';
@@ -49,7 +49,7 @@ class FileForm extends model
             mkdir($uploadDir, 0777, true);
         }
 
-        $fileRecord->file_path = 'uploads/' . $fileRecord->real_file_name;
+        $fileRecord->file_path = 'uploads/' . $fileRecord->file_true_name;
 
         // Сохраняем файл
         $fullPath = Yii::getAlias('@webroot') . '/' . $fileRecord->file_path;
