@@ -93,12 +93,12 @@ class File extends ActiveRecord
 
     public static function findByUserID($userID)
     {
-        return static::find()->where(['userID' => $userID])->orderBy(['time_modify' => SORT_DESC]);
+        return static::find()->where(['userID' => $userID])->orderBy(['time_modify' => SORT_DESC])->all();
     }
 
     public static function findByUserName($user_name)
     {
-        return static::find()->where(['user_name' => $user_name])->orderBy(['time_modify' => SORT_DESC]);
+        return static::find()->where(['user_name' => $user_name])->orderBy(['time_modify' => SORT_DESC])->all();
     }
 
     public static function listAll()

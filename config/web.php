@@ -46,6 +46,12 @@ $config = [
         'enablePrettyUrl' => true,
         'showScriptName' => false,
         'rules' => [
+            // API
+            'GET api/files' => 'api/files',
+            'POST api/files' => 'api/create',
+            'PUT api/files/<id:\d+>' => 'api/update',
+            'DELETE api/files/<id:\d+>' => 'api/delete',
+
             // Правила для FileController
             'files' => 'file/index',
             'file/upload' => 'file/upload',
