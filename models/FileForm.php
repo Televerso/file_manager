@@ -10,6 +10,7 @@ class FileForm extends model
 {
     public $userID;
     public $user_name;
+    public $newFileName;
 
     public $uploadFile;
 
@@ -17,6 +18,7 @@ class FileForm extends model
     {
         return [
             [['uploadFile'], 'required', 'message' => 'Выберите файл для загрузки'],
+            [['newFileName'], 'string', 'max' => 64],
             // Для загружаемого файла
             [['uploadFile'], 'file',
                 'skipOnEmpty' => true, 
@@ -36,10 +38,10 @@ class FileForm extends model
         }    
 
         $fileRecord = new File();
-
-        $fileRecord->file_name = $this->uploadFile->name;
         $fileRecord->userID = $this->userID;
         $fileRecord->user_name = $this->user_name;
+
+        $fileRecord->file_name = empty($this->newFileName) ? $this->uploadFile->name : $this->newFileName;
         $fileRecord->time_modify = date('Y-m-d_H:i:s');
         $fileRecord->file_true_name = $fileRecord->time_modify.'_'.md5($fileRecord->time_modify . $fileRecord->file_name).'_'.$fileRecord->file_name;
 

@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
 
             <?= $form->field($model, 'uploadFile')->fileInput() ?>
+            <?= $form->field($model, 'newFileName')->textInput() ?>
 
             <div class="form-group">
                 <div>

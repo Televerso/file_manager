@@ -48,13 +48,13 @@ class FileController extends Controller
         $userID = Yii::$app->user->id;
         $user_name = User::findIdentity($userID)->user_name;
 
-        $uploadModel = new FileForm();
-        $uploadModel->userID = $userID;
-        $uploadModel->user_name = $user_name;
+        $model = new FileForm();
+        $model->userID = $userID;
+        $model->user_name = $user_name;
 
         return $this->render('index', [
             'files' => File::listAll(),
-            'model' => $uploadModel,
+            'model' => $model,
         ]);
     }
 
@@ -66,6 +66,7 @@ class FileController extends Controller
 
         if (Yii::$app->request->isPost) {
             $model->uploadFile = UploadedFile::getInstance($model, 'uploadFile');
+            $model->newFileName = Yii::$app->request->post('FileForm')['newFileName'];
     
             $savedFileRecord = $model->upload();
             if ($savedFileRecord === null) {
