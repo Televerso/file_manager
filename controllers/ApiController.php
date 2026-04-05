@@ -86,25 +86,26 @@ class ApiController extends Controller
         }
         $fileRecord = $model->upload();
         if (!$fileRecord) {
-            return ['error' => 'Ошибка сохранения файла', 'code' => 500]; 
+            return ['error' => 'Ошибка сохранения файла', 'code' => 500];
         }
         return [
-                'success' => true,
-                'file' => [
-                    'id' => $fileRecord->fileID,
-                    'file_true_name' => $fileRecord->file_true_name,
-                    'file_name' => $fileRecord->file_name,
-                    'file_path' => $fileRecord->file_path,
-                    'user_id' => $fileRecord->userID,
-                    'user_name' => $fileRecord->user_name,
-                    'time_modify' => $fileRecord->time_modify,
-                    'size' => $fileRecord->getFormattedSize(),
-                ]
+            'success' => true,
+            'file' => [
+                'id' => $fileRecord->fileID,
+                'file_true_name' => $fileRecord->file_true_name,
+                'file_name' => $fileRecord->file_name,
+                'file_path' => $fileRecord->file_path,
+                'user_id' => $fileRecord->userID,
+                'user_name' => $fileRecord->user_name,
+                'time_modify' => $fileRecord->time_modify,
+                'size' => $fileRecord->getFormattedSize(),
+            ]
         ];
     }
 
-    public function actionUpdate($id) 
+    public function actionUpdate($id)
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
         $file = File::findIdentity($id);
 
         if (!$file) {
@@ -115,9 +116,22 @@ class ApiController extends Controller
             return ['error' => 'Нет доступа', 'code' => 403];
         }
 
-        $newFileName = Yii::$app->request->getBodyParam('file_name');
+        $rawBody = Yii::$app->request->getRawBody();
+        $data = json_decode($rawBody, true);
+        $newFileName = $data['newFileName'] ?? null;
+
+        // Резервный вариант для form-data
         if (!$newFileName) {
-            return ['error' => 'Не указано file_name', 'code' => 400];
+            $newFileName = Yii::$app->request->post('newFileName');
+        }
+
+        // Резервный вариант для GET
+        if (!$newFileName) {
+            $newFileName = Yii::$app->request->get('newFileName');
+        }
+
+        if (!$newFileName) {
+            return ['error' => 'Не указано newFileName: ' . "'$newFileName'", 'code' => 400];
         }
 
         $file->file_name = $newFileName;
@@ -132,11 +146,11 @@ class ApiController extends Controller
     public function actionDelete($id)
     {
         $file = File::findIdentity($id);
-        
+
         if (!$file) {
             return ['error' => 'Файл не найден', 'code' => 404];
         }
-        
+
         // Проверка прав
         if ($file->userID != Yii::$app->user->id) {
             return ['error' => 'Нет доступа', 'code' => 403];
@@ -146,7 +160,7 @@ class ApiController extends Controller
         if ($file->delete()) {
             return ['success' => true];
         }
-        
+
         return ['error' => 'Ошибка удаления', 'code' => 500];
     }
 }

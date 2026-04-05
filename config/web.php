@@ -53,7 +53,7 @@ $config = [
             'DELETE api/files/<id:\d+>' => 'api/delete',
 
             // Правила для FileController
-            'files' => 'file/index',
+            'files' => 'file/vue-index',
             'file/upload' => 'file/upload',
             'file/download/<id:\d+>' => 'file/download',
             'file/delete/<id:\d+>' => 'file/delete',

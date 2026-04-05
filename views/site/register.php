@@ -10,6 +10,7 @@ use yii\bootstrap5\Html;
 $this->title = 'Register';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="site-register">
     <h1><?= Html::encode($this->title) ?></h1>
 
