@@ -33,6 +33,15 @@ class RegisterForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+        return [
+            'user_name' => 'Логин',  // ← было 'User Name' или 'user_name'
+            'password' => 'Пароль',
+            'password_repeat' => 'Подтверждение пароля',
+        ];
+    }
+
 
     public function register()
     {
@@ -45,11 +54,11 @@ class RegisterForm extends Model
 
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        
+
         // Если есть поле access_token для API
         $user->generateAccessToken();
 
-        
+
         return $user->save() ? $user : false;
     }
 }
