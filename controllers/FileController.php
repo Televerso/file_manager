@@ -43,6 +43,7 @@ class FileController extends Controller
         ];
     }
 
+
     public function actionVueIndex()
     {
         return $this->render('vue-index');
@@ -86,19 +87,19 @@ class FileController extends Controller
     //     return $this->render('upload', ['model' => $model]);
     // }
 
-    // public function actionDownload($id)
-    // {
-    //     $file = File::findIdentity($id);
+    public function actionDownload($id)
+    {
+        $file = File::findIdentity($id);
 
-    //     $fullPath = Yii::getAlias('@webroot') . '/' . $file->file_path;
+        $fullPath = Yii::getAlias('@webroot') . '/' . $file->file_path;
 
-    //     if (file_exists($fullPath)) {
-    //         return Yii::$app->response->sendFile($fullPath, $file->file_name);
-    //     }
-    //     else {
-    //         Yii::$app->session->setFlash('error', 'Файл не найден на сервере');
-    //     }
-    // }
+        if (file_exists($fullPath)) {
+            return Yii::$app->response->sendFile($fullPath, $file->file_name);
+        }
+        else {
+            Yii::$app->session->setFlash('error', 'Файл не найден на сервере');
+        }
+    }
 
     // public function actionDelete($id)
     // {
