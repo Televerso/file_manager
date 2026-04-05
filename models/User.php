@@ -19,7 +19,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['user_name', 'pass_hash', 'auth_key'], 'required'],
             [['auth_key', 'access_token'], 'unique'],
-            [['user_name', 'pass_hash', 'auth_key', 'access_token'], 'string', 'max' => 255],
+            [['user_name', 'pass_hash', 'auth_key', 'access_token','salt'], 'string', 'max' => 255],
         ];
     }
 
@@ -58,12 +58,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->pass_hash);
+        return Yii::$app->security->validatePassword($password . $this->salt, $this->pass_hash);
     }
 
     public function setPassword($password)
     {
-        $this->pass_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->salt = Yii::$app->security->generateRandomString();
+        $this->pass_hash = Yii::$app->security->generatePasswordHash($password . $this->salt);
     }
 
     public function generateAccessToken()

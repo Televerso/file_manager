@@ -58,7 +58,7 @@ $config = [
             // Правила для FileController
             'files' => 'file/vue-index',
 
-            
+
             'file/upload' => 'file/upload',
             'file/download/<id:\d+>' => 'file/download',
             'file/delete/<id:\d+>' => 'file/delete',
@@ -82,7 +82,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '127.0.1.1', '::1', '192.168.0.*', '172.*', '10.*'],
     ];
 }
 
