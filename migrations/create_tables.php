@@ -15,8 +15,10 @@ class m260401_142047_create_tables extends Migration
                 'userID' => $this->primaryKey(),
                 'user_name' => $this->string()->notNull(),
                 'pass_hash' => $this->string()->notNull(),
-                'auth_key' =>$this->string()->notNull(),
-            ]);
+                'auth_key' =>$this->string()->notNull()->unique(),
+                'access_token'=> $this->string()->unique(),
+                'salt'=>$this->string()->defaultValue(''),
+            ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
 
             $this->createIndex(
                 'idx_user_id_name', 
@@ -35,7 +37,7 @@ class m260401_142047_create_tables extends Migration
                 'user_name' => $this->string(),
                 'userID' => $this->integer(),
                 'time_modify' => $this->dateTime(),
-            ]);
+            ], 'CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE=InnoDB');
 
             $this->addForeignKey(
                 'user_id_name',
