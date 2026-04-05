@@ -8,6 +8,7 @@ const FileManager = {
             newFileName: '',
             message: '',
             messageClass: '',
+            messageTimer: null,
             editingId: null,
             editFileName: '',
         }
@@ -165,12 +166,23 @@ const FileManager = {
 
         // Показать сообщение
         showMessage(msg, type) {
-            this.message = msg;
-            this.messageClass = type;
+            if (this.messageTimer) {
+                clearTimeout(this.messageTimer);
+                this.messageTimer = null;
+            }
+
+            this.message = '';
+
             setTimeout(() => {
-                this.message = '';
-                this.messageClass = '';
-            }, 5000);
+                this.message = msg;
+                this.messageClass = type;
+
+                this.messageTimer = setTimeout(()=>{
+                    this.message = '';
+                    this.messageClass = '';
+                    this.messageTimer = null;
+                }, 5000)
+            }, 50);
         },
 
         // Форматирование даты
