@@ -58,10 +58,6 @@ $config = [
             // Правила для FileController
             'files' => 'file/vue-index',
 
-
-            'file/upload' => 'file/upload',
-            'file/download/<id:\d+>' => 'file/download',
-            'file/delete/<id:\d+>' => 'file/delete',
             '' => 'site/index',
         ],
     ],
