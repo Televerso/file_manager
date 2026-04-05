@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <div class="form-group">
                                         <label>Выберите файл:</label>
                                         <input type="file" @change="handleFileUpload" class="form-control" ref="fileInput">
-                                        <small class="text-muted">Максимальный размер: 10MB</small>
+                                        <small class="text-muted">Максимальный размер: 20MB.</small>
+                                        <small class="text-muted"> Поддерживаемые форматы: .jpg .png .gif .webp .bmp .pdf .doc .docx .txt</small>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -87,7 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             <td>{{ file.id }}</td>
                                             <td>
                                                 <span :title="file.file_true_name">
-                                                    {{ truncate(file.file_true_name, 50) }}
+                                                    {{ truncate(file.file_true_name, 30) }}
                                                 </span>
                                             </td>
                                             <td>

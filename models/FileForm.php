@@ -22,10 +22,10 @@ class FileForm extends model
             // Для загружаемого файла
             [['uploadFile'], 'file',
                 'skipOnEmpty' => true, 
-                'extensions' => ['jpg', 'png', 'pdf', 'doc', 'docx', 'txt'],
+                'extensions' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'pdf', 'doc', 'docx', 'txt'],
+                'maxSize' => 20 * 1024 * 1024,  // 20 MB
+                'tooBig' => 'Максимальный размер файла 20MB',
                 'wrongExtension' => 'Разрешены только: {extensions}',
-                'maxSize' => 10 * 1024 * 1024,  // 10 MB
-                'tooBig' => 'Максимальный размер файла 10MB',
             ],
         ];
     }

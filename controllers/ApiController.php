@@ -47,6 +47,9 @@ class ApiController extends Controller
         ];
     }
 
+    /**
+     * При вызове GET - возвращает все файлы 
+     */
     public function actionFiles()
     {
         $userID = Yii::$app->user->id;
@@ -71,6 +74,9 @@ class ApiController extends Controller
         return $result;
     }
 
+    /**
+     * При вызове POST - создает новый файл
+     */
     public function actionCreate()
     {
         $model = new FileForm();
@@ -79,11 +85,12 @@ class ApiController extends Controller
 
         $model->uploadFile = UploadedFile::getInstanceByName('file');
 
+        if (!$model->validate()) {
+            return ['error' => $model->getFirstError('uploadFile'), 'code' => 400];
+        }
+
         $model->newFileName = Yii::$app->request->post('newFileName');
 
-        if (!$model->uploadFile) {
-            return ['error' => 'Файл не загружен', 'code' => 400];
-        }
         $fileRecord = $model->upload();
         if (!$fileRecord) {
             return ['error' => 'Ошибка сохранения файла', 'code' => 500];
@@ -103,6 +110,10 @@ class ApiController extends Controller
         ];
     }
 
+    /**
+     * При выхове PUT - обновляет имя файла
+     * @param mixed $id - id файла для изменения
+     */
     public function actionUpdate($id)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -143,6 +154,10 @@ class ApiController extends Controller
         return ['error' => 'Ошибка обновления', 'code' => 500];
     }
 
+    /**
+     * При вызове DELETE - удаляет файл
+     * @param mixed $id - id файла для удаления
+     */
     public function actionDelete($id)
     {
         $file = File::findIdentity($id);
