@@ -31,7 +31,7 @@ class m260401_142047_create_tables extends Migration
         if ($this->db->getTableSchema('files') === null) {
             $this->createTable('files', [
                 'fileID' => $this->primaryKey(),
-                'real_file_name' => $this->string()->notNull(),
+                'file_true_name' => $this->string()->notNull(),
                 'file_name' => $this->string()->notNull(),
                 'file_path' => $this->string()->notNull(),
                 'user_name' => $this->string(),
