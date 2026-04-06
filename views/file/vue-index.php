@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </td>
                                             <td>
                                                 <span v-if="editingId !== file.id">
-                                                    {{ file.file_name }}
+                                                    {{ truncate(file.file_name,36) }}
                                                 </span>
                                                 <div v-else>
                                                     <input type="text" v-model="editFileName" class="form-control"

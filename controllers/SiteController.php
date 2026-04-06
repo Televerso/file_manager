@@ -86,6 +86,9 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Действие при регистрации нового пользователя
+     */
     public function actionRegister()
     {
         $model = new RegisterForm();

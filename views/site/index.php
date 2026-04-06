@@ -13,7 +13,9 @@ $this->title = 'Менеджер файлов на Yii2+Vue2';
     </div>
 
     <div class="body-content">
-
+        <div class="jumbotron text-center bg-transparent mt-5 mb-5">
+            <h4 class="display-8">Тут хранятся ваши файлы</h4>
+        </div>
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <h2>Функционал:</h2>

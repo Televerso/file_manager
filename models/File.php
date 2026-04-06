@@ -15,6 +15,9 @@ class File extends ActiveRecord
         return 'files';    
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -25,39 +28,20 @@ class File extends ActiveRecord
         ];
     }
 
+    /**
+     * @param int $id - поиск файла по id
+     * @return static | null - ActiveRecord, совпадающий с условием
+     */
     public static function findIdentity($id)
     {
         return static::findOne(['fileID'=>$id]);
     }
 
     // Связка с user
-    public function getUserByID()
+    public function getUser()
     {
         return $this->hasOne(User::class, ['userID' => 'userID', 'user_name'=>'user_name']);
     }
-
-    // public function upload()
-    // {
-    //     if ($this->validate() && $this->uploadFile) {
-    //         $this->file_name = $this->uploadFile->name;
-    //         $this->time_modify = date('Y-m-d H:i:s');
-    //         $this->real_file_name = $this->time_modify . md5($this->time_modify . $this->file_name) . $this->file_name;
-
-    //         // Путь для сохранения (относительно корня проекта)
-    //         $uploadDir = Yii::getAlias('@webroot') . '/uploads/';
-    //         if (!is_dir($uploadDir)) {
-    //             mkdir($uploadDir, 0755, true);
-    //         }
-
-    //         $this->file_path = 'uploads/' . $this->file_name;
-    //         $fullPath = Yii::getAlias('@webroot') . '/' . $this->file_path;
-    //         // Сохраняем файл
-    //         if ($this->uploadFile->saveAs($fullPath)) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     public function getFileUrl()
     {
@@ -73,6 +57,9 @@ class File extends ActiveRecord
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function beforeDelete()
     {
         if (parent::beforeDelete()) {
@@ -82,6 +69,9 @@ class File extends ActiveRecord
         return false;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
