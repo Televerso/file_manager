@@ -48,6 +48,9 @@ class File extends ActiveRecord
         return Yii::$app->request->baseUrl . '/' . $this->file_path;
     }
 
+    /**
+     * Удаляет файл, соответствующей данной записи
+     */
     public function deleteFile()
     {
         $fullPath = Yii::getAlias('@webroot') . '/' . $this->file_path;
@@ -81,21 +84,35 @@ class File extends ActiveRecord
         return false;
     }
 
+    /**
+     * Поиск всех файлов пользователя
+     * @param int $userID - id пользователя
+     */
     public static function findByUserID($userID)
     {
         return static::find()->where(['userID' => $userID])->orderBy(['time_modify' => SORT_DESC])->all();
     }
 
+    /**
+     * Поиск всех файлов пользователя
+     * @param String $user_name - имя пользователя
+     */
     public static function findByUserName($user_name)
     {
         return static::find()->where(['user_name' => $user_name])->orderBy(['time_modify' => SORT_DESC])->all();
     }
 
+    /**
+     * Возвращает все имеющиеся файлы
+     */
     public static function listAll()
     {
         return static::find()->all();
     }
 
+    /**
+     * Форматирует размер файла в байтах в строку
+     */
     public function getFormattedSize()
     {
         $path = Yii::getAlias('@webroot') . '/' . $this->file_path;

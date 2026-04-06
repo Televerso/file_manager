@@ -43,6 +43,10 @@ class RegisterForm extends Model
     }
 
 
+    /**
+     * Регистрирует пользователя с указанными user_name и password
+     * @return bool - был ли пользователь успешно зарегистрирован
+     */
     public function register()
     {
         if (!$this->validate()) {

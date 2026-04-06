@@ -30,6 +30,9 @@ class FileForm extends model
         ];
     }
 
+    /**
+     * Загрузка файла на сервер и создание соответствующей записи в бд
+     */
     public function upload()
     {
         if (!$this->validate()) 

@@ -56,27 +56,42 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
+    /**
+     * Проверяет верность пароля, подбирет соль из бд
+     * @param String $password - пароль
+     */
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password . $this->salt, $this->pass_hash);
     }
 
+    /**
+     * Устанавливает пароль пользователя, задает соль в бд
+     * @param String $password - пароль
+     */
     public function setPassword($password)
     {
         $this->salt = Yii::$app->security->generateRandomString();
         $this->pass_hash = Yii::$app->security->generatePasswordHash($password . $this->salt);
     }
 
+    /**
+     * Генерирует значение в поле access_token
+     */
     public function generateAccessToken()
     {
         $this->access_token = Yii::$app->security->generateRandomString();
     }
 
+    /**
+     * Генерирует значение в поле auth_key
+     */
     public function generateAuthKey() 
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
+    
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
